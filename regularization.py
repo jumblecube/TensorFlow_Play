@@ -61,8 +61,19 @@ sess.run(init)
 for reg_lambda in np.linspace(0, 1, 100):
     for epoch in range(training_epoch):
         sess.run(train_op, feed_dict={X: x_train, Y: y_train})
+    # w_val = sess.run(w)
     final_cost = sess.run(cost, feed_dict={X: x_test, Y: y_test})
     print('reg lambda ', reg_lambda)
     print('final cost ', final_cost)
+    print('weight ', w_val)
 
 sess.close()
+
+"""plt.scatter(x_train, y_train)
+y_train2 = 0
+for i in range(num_coeffs):
+    y_train2 += w_val[i] * np.power(x_train, i)
+
+plt.plot(x_train, y_train2, 'r')
+plt.show()
+"""
