@@ -5,7 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 learning_rate = 0.001
-training_epoch = 40
+training_epoch = 1000
 reg_lambda = 0.
 
 """ Split dataset function """
@@ -58,22 +58,24 @@ sess = tf.Session()
 init = tf.global_variables_initializer()
 sess.run(init)
 
+count = -1
+w_val = 0
+
 for reg_lambda in np.linspace(0, 1, 100):
+    count += 1
     for epoch in range(training_epoch):
         sess.run(train_op, feed_dict={X: x_train, Y: y_train})
-    # w_val = sess.run(w)
     final_cost = sess.run(cost, feed_dict={X: x_test, Y: y_test})
-    print('reg lambda ', reg_lambda)
-    print('final cost ', final_cost)
-    print('weight ', w_val)
+    w_val = sess.run(w)
 
 sess.close()
 
-"""plt.scatter(x_train, y_train)
 y_train2 = 0
-for i in range(num_coeffs):
-    y_train2 += w_val[i] * np.power(x_train, i)
 
+for j in range(0, 1):
+    for i in range(num_coeffs):
+        y_train2 += w_val[i] * np.power(x_train, i)
+
+plt.scatter(x_train, y_train)
 plt.plot(x_train, y_train2, 'r')
 plt.show()
-"""
